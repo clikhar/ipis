@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    {% load static %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <meta http-equiv="refresh" content="50" />
+    <script src="{% static 'js/train_data.js' %}"></script>
+    <script>    
+        window.setTimeout(function(){    
+          // Move to a new location or you can do something else
+          //give view name
+          window.location.href = "10LineM";      
+          }, 20000);         
+      </script>
+    <style>
+        table, td {          
+          border: 1px solid white;
+          border-collapse: collapse;
+          text-align:center;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;          
+          background-color: black;
+          font-family:Arial, Helvetica, sans-serif;
+        }        
+        </style>
+</head>
+
+<body style="width:100%; height:192cm; margin-top: 0%; margin-left: 0%; margin-right: 0%; background-color:black;"> 
+    <table>     
+      {% for train_data in ntes_data%}
+        
+      {% if train_data.STAT == "O" and train_data.AD == "A" %}
+      <tr style="height:16.3px; font-size: 14.6px;font-family: Arial, Helvetica, sans-serif;color: rgb(93, 243, 93);">          
+          <td style="width:55px">{{train_data.TNo}}</td>
+          <td style="width:230px;text-align:left">{{ train_data.TNAMEH }}</td>          
+          <td style="width:50px">{{train_data.EAT}}</td>          
+          <td style="width:20px">{{train_data.AD}}</td>
+          <td style="width:30px">{{train_data.PF|cut:"0"}}</td>
+      </tr>
+      {% else %}
+      {% if train_data.STAT == "AG" or train_data.STAT == "AD" %}
+      <tr style="height:16.3px; font-size: 14.6px;font-family: Arial, Helvetica, sans-serif; color: yellow;">          
+          <td style="width:55px">{{train_data.TNo}}</td>
+          <td style="width:230px;text-align:left">{{train_data.TNAMEH}}</td>          
+          <td style="width:50px">{{train_data.EAT}}</td>
+          <td style="width:20px">{{train_data.AD}}</td>                          
+          <td style="width:30px">{{train_data.PF|cut:"0"}}</td>
+      </tr>
+      {% else %}
+      {% if  train_data.AD == "D"  %}
+      <tr style="height:16.3px; font-size: 14.6px;font-family: Arial, Helvetica, sans-serif; color: skyblue;">          
+          <td style="width:55px">{{train_data.TNo}}</td>
+          <td style="width:230px;text-align:left">{{train_data.TNAMEH }}</td>          
+          <td style="width:50px">{{train_data.EDT}}</td>
+          <td style="width:20px">{{train_data.AD}}</td>                          
+          <td style="width:30px">{{train_data.PF|cut:"0"}}</td>
+      </tr>
+      {% else %}
+      {% if  train_data.STAT == "L"  %}
+      <tr style="height:16.3px; font-size: 14.6px;font-family: Arial, Helvetica, sans-serif; color:rgb(93, 243, 93);;">            
+            <td style="width:55px">{{train_data.TNo}}</td>
+            <td style="width:230px;text-align:left">{{train_data.TNAMEH}}</td>            
+            <td style="width:50px; color:red">{{train_data.EAT}}</td>
+            <td style="width:20px">{{train_data.AD}}</td>                            
+            <td style="width:30px">{{train_data.PF|cut:"0"}}</td>
+      </tr>
+      {% else %}
+      {% if  train_data.STAT == "C"  %}
+      <tr style="height:16.3px; font-size: 14.6px;font-family: Arial, Helvetica, sans-serif; color:rgb(93, 243, 93);;">            
+            <td style="width:55px">{{train_data.TNo}}</td>
+            <td style="width:230px;text-align:left">{{train_data.TNAMEH}}</td>            
+            <td colspan="3" style="width:100px; color:red">रद्द की गयी है </td>            
+      </tr>
+      {% endif %}
+      {% endif %}
+      {% endif %}
+      {% endif %}
+      {% endif %}  
+      {% endfor %}
+    </table>
+  
+</body>
+

@@ -1,0 +1,88 @@
+{%extends 'TV_Display.html' %}
+
+{% block content %}
+<meta http-equiv="refresh" content="15" />
+<script>    
+  window.setTimeout(function(){
+
+    // Move to a new location or you can do something else
+    window.location.href = "home";
+
+    }, 6000);
+
+</script>
+<head>
+    <style>
+    table, td {
+      
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align:center;
+      font-size: 4.5vh;
+      color: yellow;
+      background-color: blue;
+    }
+    th{
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align:center;
+      font-size:4.75vh;
+      color: yellow;
+      background-color:purple
+
+    }
+    </style>
+</head>
+<table style="width:100%;border:2px solid brown;height:12vh " >
+  <tr>
+    <td style="background-color:cadetblue;color: blue;font-size: 6vh;font-weight: bolder;">एकात्‍मिक प्रवासी माहिती प्रणाली, नागपुर</td>
+  </tr>
+  </table>
+
+<table style="width:100%;border:2px solid black">
+    <tr >
+        <th >गाड़ी क्र.</th>
+        <th>गाडी चे नाव </th>
+        <th>वेळ</th>
+        <th>आ/प्र</th>
+        <th>प्‍लॅ.क्र.</th>
+    </tr>
+    {% for train_data in ntes_data%}
+    
+
+    
+    <tr >
+      <td>{{train_data.trainNo}}</td>
+      {% if  train_data.src == null %}
+      <td style="text-align:left">{{train_data.trainNameMarathi}}</td>
+      {% else %}
+      <td style="text-align:left">{{train_data.trainNameHindi}}</td>
+      {% endif %}
+      {% if train_data.src == station  or train_data.AD == "D"%}
+      <td>{{train_data.ETD}}</td>
+      <td>D</td>
+      {% else %}
+      
+      {% if train_data.isArrived == 0 or train_data.STAT == "O" %}
+      <td>{{train_data.ETA}}</td>
+      <td>A</td>
+
+      {% else %}
+      {% if train_data.isArrived == 1 or train_data.STAT == "AG" or train_data.STAT == "AD" %}
+      <td colspan="2" style="color:orange;">आली आहे</td> 
+      
+      {% else %}
+      <td style="color:red;">{{train_data.ETA}}</td>
+      <td>A</td>
+      
+      
+      {% endif %}
+      {% endif %}        
+      {% endif %} 
+      <td>{{train_data.platformNo}}</td>
+  </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

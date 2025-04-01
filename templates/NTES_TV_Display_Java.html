@@ -1,0 +1,193 @@
+{%extends 'TV_Display.html' %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10" />
+
+<head >
+  
+  <script type="text/javascript">
+    function generate_table() {
+// get the reference for the body
+var train_data= '{{json_ntes_data}}'.split(",");
+  var json_data = JSON.parse('{{json_ntes_data | safe}}');
+
+
+var mytable = document.getElementsByTagName("table")[1];
+//var mytable = document.getElementsById("t_data")[1];
+mytablebody = document.createElement("tbody");
+// creates a <table> element and a <tbody> element
+if (train_data.length <10)
+{var n =  train_data.length}
+else {var n =10}
+
+
+// creating all cells 
+for (var i = 0; i < n; i++) {
+  // creates a table row
+  var row = document.createElement("tr");
+
+ 
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(json_data[i].trainNo);
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+    var cell = document.createElement("td");
+    
+    var cellText = document.createTextNode(json_data[i].trainName);
+    cell.style.textAlign = "left";
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+     
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(json_data[i].dstn);
+    cell.appendChild(cellText);    
+    row.appendChild(cell);
+    
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(json_data[i].ADFlag);
+    cell.appendChild(cellText);    
+    row.appendChild(cell);
+
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(json_data[i].expectedTime);
+    cell.appendChild(cellText);    
+    row.appendChild(cell);
+
+    var cell = document.createElement("td");
+    if(json_data[i].expectedDelay=="On Time")
+    {
+      cell.style.color="green";
+    }
+    else{cell.style.color="red";}
+    var cellText = document.createTextNode(json_data[i].expectedDelay);
+    cell.appendChild(cellText);    
+    row.appendChild(cell);
+
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(json_data[i].platformNo);
+    cell.appendChild(cellText);    
+    row.appendChild(cell);
+
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(json_data[i].trainStatus);
+    cell.appendChild(cellText);    
+    row.appendChild(cell);
+  // add the row to the end of the table body
+  mytablebody.appendChild(row);
+}
+
+// put the <tbody> in the <table>
+  mytable.appendChild(mytablebody);
+// appends <table> into <body>
+//body.appendChild(tbl);
+// sets the border attribute of tbl to 2;
+
+
+
+setInterval(function()
+      { 
+        // To change heading in hindi
+        var mytable = document.getElementsByTagName("table")[0];
+        var x = mytable.rows[0].cells;
+        x[0].innerHTML="एकीकृत यात्री सूचना प्रणाली, नागपुर";
+        //To change train data in hindi
+        var mytable = document.getElementsByTagName("table")[1];
+
+         //to change data header in hindi 
+         var x = mytable.rows[0].cells;
+        
+        x[0].innerHTML= "गाड़ी क्र.";
+        x[1].innerHTML= "गाड़ी का नाम";
+        x[2].innerHTML= "गंतव्य";
+        x[3].innerHTML= "आ/प्र";
+        x[4].innerHTML= "समय";
+        x[5].innerHTML= "विलंब";
+        x[6].innerHTML= "प्ले.क्र.";
+        x[7].innerHTML= "स्थिति";
+
+
+
+
+       // to change train name in hindi
+        var j=0
+        for (i = 1; i < n+1; i++) {
+        var x = mytable.rows[i].cells;
+        
+        x[1].innerHTML= json_data[j].trainNameHindi;
+        
+        j=j+1;
+        }
+      }, 5000); 
+
+      setInterval(function()
+      { 
+        
+        var today = new Date();
+        if (today.getMinutes()<10){ var time = today.getHours() + ":0" + today.getMinutes();}
+        else{var time = today.getHours() + ":" + today.getMinutes();}
+        
+        // To change heading in hindi
+        var mytable = document.getElementsByTagName("table")[0];
+        var x = mytable.rows[0].cells;
+        x[1].innerHTML=time;
+      },100);
+
+}
+    
+  
+  </script> 
+    <style>
+    table, td {
+      
+      border: 1px solid white;
+      border-collapse: collapse;
+      text-align:center;
+      height:5.6vmin;
+      font-size: 4vmin;
+      color: white;
+      background-color: black;
+    }
+    th{
+      border: 1px solid white;
+      border-collapse: collapse;
+      text-align:center;
+      height:6vh;
+      /*font-size: 5vh;*/
+      color: yellow;
+      background-color:purple
+      
+
+    }
+    </style>
+</head>
+<table style="width:100%;border:2px solid white;height:12vh ;top: 0%;" >
+<tr>
+  <td style="background-color:cadetblue ;color: blue;font-size:4.8vh;font-weight: bolder;">INTEGRATED PASSENGER INFORMATION DISPLAY AT NAGPUR</td>
+  <td style="background-color:cadetblue ;color: BLACK;font-size:4.8vh;font-weight: bolder;border:none;width: 9vw;">  </td>
+</tr>
+</table>
+
+<table id="t_data" style="width:100%;border:2px solid white;" >
+  <tr >
+      <th style="width:9vw" >Train No</th>
+      <th >Train Name</th>
+      <th style="width:8vw"">Destination</th>
+      <th >A/D</th>
+      <th style="width:8vw">Expt.Time</th>
+      <th style="width:9vw">Delay</th>        
+      <th style="width:6vw">PFNo.</th>
+      <th style="width:9vw">Status</th>
+  </tr>
+  {% for train_data in ntes_data%}
+  
+
+  
+
+  {% endfor %}
+</table>
+
+<body  onload="generate_table()">
+  
+</body>
+
+{% endblock %}

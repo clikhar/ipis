@@ -1,0 +1,159 @@
+{%extends 'TV_Display.html' %}
+
+{% block content %}
+<meta http-equiv="refresh" content="15" />
+<script>    
+    window.setTimeout(function(){
+  
+      // Move to a new location or you can do something else
+      //give view name
+      //window.location.href = "hindi";
+  
+      }, 50000);
+  
+  </script>
+<head>
+    <style>
+    table, td {
+      
+      border: 1px solid white;
+      border-collapse: collapse;
+      text-align:center;
+      height:5.6vmin;
+      font-size: 4vmin;
+      color: white;
+      background-color: black;
+    }
+    th{
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align:center;
+      height:6vh;
+      /*font-size: 5vh;*/
+      color: yellow;
+      background-color:purple
+      
+
+    }
+    </style>
+</head>
+<table style="width:100%;border:2px solid brown;height:12vh " >
+<tr>
+  <td style="background-color:cadetblue ;color: blue;font-size:4.8vh;font-weight: bolder;">INTEGRATED PASSENGER INFORMATION DISPLAY AT NAGPUR</td>
+</tr>
+</table>
+
+
+<table  style="width:100%;border:2px solid black;" >
+    <tr >
+        <th >Train No</th>
+        <th>Train Name</th>
+        <th>Destination</th>
+        <th>A/D</th>
+        <th>Expt.Time</th>
+        <th>Delay(HH:mm)</th>        
+        <th>PFNo.</th>
+        <th>Status</th>
+    </tr>
+    {% for train_data in ntes_data%}
+    
+
+    <tr >
+        <td>{{train_data.trainNo}}</td>
+        <td style="text-align:left">{{train_data.trainName}}</td>
+        <!--<td id="name" style="text-align:left"></td>-->
+        <td>{{train_data.dstn}}</td>
+        <td>{{train_data.ADFlag}}</td>
+
+
+        <!--{% if train_data.ADFlag == "D"  %}
+        <td>{{train_data.ETD}}</td>
+        {% else %}
+        <td>{{train_data.ETA}}</td>
+        {% endif %}
+        -->
+
+        <td>{{train_data.expectedTime}}</td>
+        {% if train_data.delayDep == "00:00"  %}
+        <td style="color:green;">{{train_data.expectedDelay}}</td>
+        
+        {% else %}
+        <td style="color:red">{{train_data.expectedDelay}}</td>
+        {% endif %}
+
+        {% if train_data.trainStatus == "Arrived"  %}
+        <td  style="color:green;">{{train_data.platformNo}}</td>
+        <td  style="color:green;">{{train_data.trainStatus}}</td>
+        
+        {% else %}
+        {% if train_data.trainStatus == "Departed"  %}
+        <td style="color:red">{{train_data.platformNo}}</td>
+        <td style="color:red">{{train_data.trainStatus}}</td>
+        
+        {% else %}
+        
+        <td >{{train_data.platformNo}}</td>
+        <td>{{train_data.trainStatus}}</td>
+        
+        {% endif %}
+
+        {% endif %}
+        
+<!--
+        {% if train_data.src == station  %}
+        <td>{{train_data.ADFlag}}</td>
+        <td>{{train_data.ETD}}</td>
+        <td>{{train_data.delayDep}}</td>
+        
+        {% else %}
+        
+        {% if train_data.isArrived == 0 %}
+        <td>{{train_data.ADFlag}}</td>
+        <td>{{train_data.ETA}}</td>
+        <td>{{train_data.delayArr}}</td>
+
+        {% else %}
+        <td>{{train_data.ADFlag}}</td>
+        <td >{{train_data.ETD}}</td>
+        <td>{{train_data.delayDep}}</td>
+        
+        {% endif %}
+        {% endif %}        
+       
+        <td>{{train_data.platformNo}}</td>
+        <td>{{train_data.trainStatus}}</td>
+
+
+    -->
+    </tr>
+
+
+    <script type="text/javascript">
+      var train_data= '{{json_ntes_data}}'.split(",");
+      var json_data = JSON.parse('{{json_ntes_data | safe}}');
+      var sample_json = [{'train_name':'02702-NDLS SBC EXp','coach_position':'s1,s2,s3,s4,s5'},{'train_name':'02703- SBC NDLSEXp','coach_position':'s1,s2,s3,s4,s5'}]
+      var  i=1;
+      
+      
+         setInterval(function()
+          { 
+              if (i<json_data.length)
+              {
+              document.getElementById('name').innerHTML = json_data[i].trainName;
+              document.getElementById('coach_position').innerHTML = json_data[i].coachPosition;
+              i++;
+              }
+              else 
+              {
+                  i=0;
+              }
+          }, 5000); 
+      
+    
+    </script> 
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}
