@@ -21,19 +21,24 @@
             
           } 
           table {  
-                    width: 96%; /* Makes table fit the full width of the page */
-                    max-width: 100%; /* Prevents table from exceeding the page width */
+                   /*
+                    width: 96%; 
+                    max-width: 100%;
                     border: 1px solid white;
                     border-collapse: collapse;
                     text-align:center;
                     background-color: rgb(245, 245, 245);
+                    */
+                    width: 100%;
+                    height: 100vh;
+                    border-collapse: collapse;
                   }
            td {  
                     
             border: 1px solid white;
             border-collapse: collapse;
             text-align:center;
-            background-color: black;
+            /*background-color: black;*/
           }
           th {  
                     
@@ -42,6 +47,15 @@
                     text-align:center;
                     background-color: rgb(26, 27, 94);
                   }
+          tr:nth-child(even) {
+                    background-color: blue; /* Light gray for even rows */
+                    color: white;
+                    }
+
+          tr:nth-child(odd) {
+                    background-color: black; /* White for odd rows */
+                    color:white;
+                    }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width= , initial-scale=1.0">

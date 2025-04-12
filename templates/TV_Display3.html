@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<meta http-equiv="refresh" content="100" />    
+<head>
+    <style>
+      @font-face {
+  font-family: 'TimesNewRomanRegular';
+  src: url('fonts/tahoma.ttf') format('truetype');
+}
+
+        html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* No scrollbars */
+  font-family: 'TimesNewRomanRegular', serif;
+}
+
+.table-container {
+  width: 100vw;
+  height: 100vh;
+  /*padding: 1vh 1vw; /* Prevents cut-off edges */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Columns adjust dynamically */
+}
+
+td, th {
+  text-align: center;
+  color: white;
+  border: 1px solid white;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Dynamically adjust font size to fill cell */
+  /*font-size: clamp(10px, 5vw, 8vh); */
+  font-family: 'TimesNewRomanRegular', serif;
+  font-size: 6.8vh;
+  width: auto; /* Allow column to resize */
+  height: auto; /* Allow row to resize */
+}
+tr:nth-child(even) {
+                    background-color: blue; /* Light gray for even rows */
+                    color: white;
+                    }
+
+          tr:nth-child(odd) {
+                    background-color: black; /* White for odd rows */
+                    color:white;
+                    }
+
+th {
+  background-color: purple;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width= , initial-scale=1.0">
+    <title>TV Display</title>
+</head>
+
+<!--<body bgcolor="black" style="width:100% ;margin-top: 0%;margin-left: 0%;margin-right: 0%;">-->
+<body bgcolor="black"></body>
+<div class="table-container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+<!--
+<div class="fixed" style="width:100%;margin-right: 0%;">
+    <table style="width:100%;height: 4.2vh;border-collapse: collapse;margin-right: 0%;">
+  <tr><td id ="train_name" style="background-color: rgb(221, 35, 38) ;font-size: 3.5vh;"> </td></tr>
+    </table>
+    <table style="width:100%;right: 1px;height: 8vh"> 
+        <tr height="10vh"><td  height="10vmax" id ="coach_position"  style="height:4vh;background-color:whitesmoke;color: blue;font-size: 3.5vmin;"></td></tr>
+    </table >
+    <table style="width:100%;right: 1px; height: 4.2vh;">
+        <tr><td style="font-size: 3.5vmin;"><marquee> Welcome to Nagpur Station. Please do not litter. Keep your surrounding clean.</marquee></td></tr> 
+    </table>
+    
+
+
+<script type="text/javascript">
+  var train_data= '{{json_ntes_data}}'.split(",");
+  var json_data = JSON.parse('{{json_ntes_data | safe}}');
+  var sample_json = [{'train_name':'02702-NDLS SBC EXp','coach_position':'s1,s2,s3,s4,s5'},{'train_name':'02703- SBC NDLSEXp','coach_position':'s1,s2,s3,s4,s5'}]
+  var  i=1;
+  
+  document.getElementById('train_name').innerHTML = json_data[0].trainNo+':'+json_data[0].trainName;
+  document.getElementById('coach_position').innerHTML = json_data[0].coachPosition;
+     setInterval(function()
+      { 
+          if (i<json_data.length)
+          {
+          document.getElementById('train_name').innerHTML = json_data[i].trainNo+':'+json_data[i].trainName;
+          document.getElementById('coach_position').innerHTML = json_data[i].coachPosition;
+          i++;
+          }
+          else 
+          {
+              i=0;
+          }
+      }, 5000); 
+  
+
+</script> 
+
+    </div>
+    -->
+
+</html>

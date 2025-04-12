@@ -23,6 +23,11 @@ def home2(request):
     json_ntes_data = json.dumps(ntes_data)
     return render(request,'TV_Display_English2.html',{'ntes_data':ntes_data,'station':station,'json_ntes_data':json_ntes_data})
 
+def home3(request):
+    ntes_data = data2()
+    json_ntes_data = json.dumps(ntes_data)
+    return render(request,'TV_Display_English_NTES.html',{'ntes_data':ntes_data,'station':station,'json_ntes_data':json_ntes_data})
+
 def hindi(request):
     ntes_data = mix_data()
     json_ntes_data = json.dumps(ntes_data)
@@ -267,3 +272,25 @@ def mix_data2():
 
     except:
         jsonArray.append("")
+
+def data2():
+        #url = 'https://enquiry.indianrail.gov.in/ntessrvc/TrainService?action=LiveStation'
+        url = 'https://enquiry.indianrail.gov.in/ntessrvc/LiveStation'
+        body = {"station":station,"nextMins":480}
+        headers = {'authToken': '569a6d6c430c906e98ad192e6ea0cd51'}
+
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        #print(r.json()['vTrainList'][0]['trainNo'])
+        ntes_data = r.json()['vTrainList']
+        train_list = []
+        i = 0
+        for train_data in ntes_data:
+            if i<7:
+                
+                train_data['trainNameHindi']=  html.unescape(train_data['trainNameHindi'])
+                train_data['ETA']=  train_data['ETA'][-5:]
+                train_data['ETD']=  train_data['ETD'][-5:]
+                train_list.append(train_data)
+                i= i + 1
+            
+        return train_list

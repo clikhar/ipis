@@ -5,6 +5,7 @@ urlpatterns = {
     path('',views.home,name='home'),
     path('home',views.home,name='home'),
     path('home2',views.home2,name='home2'),
+    path('home3',views.home3,name='home3'),
     path('hindi',views.hindi,name='hindi'),
     path('hindi2',views.hindi2,name='hindi2'),
     path('marathi',views.marathi,name='marathi'),

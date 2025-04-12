@@ -1,0 +1,103 @@
+{%extends 'TV_Display2.html' %}
+
+{% block content %}
+<meta http-equiv="refresh" content="15" />
+<script>    
+    window.setTimeout(function(){
+  
+      // Move to a new location or you can do something else
+      //give view name
+      /*window.location.href = "hindi2";*/
+  
+      }, 6000);
+  
+  </script>
+<head>
+    <style>
+      
+     /*td {
+      
+      border: 1px solid white;
+      border-collapse: collapse;
+      text-align:center;
+      font-size: 8.1vh;;
+      color: white;
+      background-color: black;
+      
+      height: 12vh;
+    }
+      th{
+      border: 1px solid white;
+      border-collapse: collapse;
+      text-align:center;
+      font-size: 7vh;
+      color: white;
+      background-color:purple;
+      height: 12vh;
+    }*/
+    
+    td,th {
+          font-size: clamp(10px, 5vw, 8vh);
+          text-align: center;
+          white-space: nowrap; /* Prevents text from wrapping */
+          /*color: white;*/
+          /*background-color: red;*/
+          height: 12vh;
+          border: 1px solid white;
+          border-collapse: collapse;
+        }
+    
+    </style>
+</head>
+
+<!--
+<table style="width:100%;border:2px solid brown;height:12vh " >
+<tr>
+  <td style="background-color:cadetblue ;color: blue;font-size:4.8vh;font-weight: bolder;">INTEGRATED PASSENGER INFORMATION DISPLAY AT NAGPUR</td>
+</tr>
+</table>
+-->
+
+<table  style="width:100%;border:2px solid black;">
+    <tr >
+        <th >Train No</th>
+        <th>Train Name</th>
+        <th>Expt.Time</th>
+        <!--<th>A/D</th>-->
+        <th>PFNo.</th>
+    </tr>
+    {% for train_data in ntes_data%}
+    
+    <tr  >
+        <td>{{train_data.trainNo}}</td>
+        <td style="text-align:left">{{train_data.trainName}}</td>
+        {% if train_data.src == station  or train_data.AD == "D"%}
+        <td>{{train_data.ETD}}</td>
+        <!--<td>D</td>-->
+        {% else %}
+        
+        {% if train_data.isArrived == 0 or train_data.STAT == "O" %}
+        <td>{{train_data.ETA}}</td>
+        <!--<td>A</td>-->
+
+        {% else %}
+        {% if train_data.isArrived == 1 or train_data.STAT == "AG" or train_data.STAT == "AD" %}
+        <!--<td colspan="2" style="color:orange;">Arrived</td> -->
+        <td  style="color:orange;">Arrived</td>
+        
+        {% else %}
+        <td style="color:red;">{{train_data.ETA}}</td>
+       <!--<td>A</td>-->
+        
+        
+        {% endif %}
+        {% endif %}        
+        {% endif %} 
+        <td>{{train_data.platformNo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}
