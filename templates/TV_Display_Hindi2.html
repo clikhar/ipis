@@ -1,4 +1,4 @@
-{%extends 'TV_Display2.html' %}
+{%extends 'TV_Display3.html' %}
 
 {% block content %}
 <meta http-equiv="refresh" content="15" />
@@ -13,7 +13,7 @@
 </script>
 <head>
   <style>
-    
+    /*
    td {
     
     border: 1px solid white;
@@ -34,17 +34,19 @@
     background-color:purple;
     height: 12vh;
   }
+*/
   </style>
 </head>
 
-
-<table style="width:100%;border:2px solid black">
+<!--<table style="width:100%;border:2px solid black">-->
+<table>
     <tr >
         <th >गाड़ी क्र.</th>
         <th>गाड़ी का नाम </th>
         <th>समय</th>
         <!--<th>आ/प्र</th>-->
         <th>प्ले.क्र.</th>
+        <th>स्थिति</th>
     </tr>
     {% for train_data in ntes_data%}
     
@@ -54,26 +56,30 @@
       <td>{{train_data.trainNo}}</td>
       <td style="text-align:left">{{train_data.trainNameHindi}}</td>
       {% if train_data.src == station  or train_data.AD == "D"%}
-      <td>{{train_data.ETD}}</td>
-      <!--<td>D</td>-->
-      {% else %}
-      
-      {% if train_data.isArrived == 0 or train_data.STAT == "O" %}
-      <td>{{train_data.ETA}}</td>
-      <!--<td>A</td>-->
+        <td>{{train_data.ETD}}</td>
+        <!--<td>D</td>-->
+        {% else %}
+        <td>{{train_data.ETA}}</td>
+        {% endif %}
 
-      {% else %}
-      {% if train_data.isArrived == 1 or train_data.STAT == "AG" or train_data.STAT == "AD" %}
-      <td  style="color:orange;">आ चुकी है </td> 
+        <td>{{train_data.platformNo}}</td>
+
       
-      {% else %}
-      <td style="color:red;">{{train_data.ETA}}</td>
-      <!--<td>A</td>-->
-      
-      {% endif %}
-      {% endif %}        
-      {% endif %} 
-      <td>{{train_data.platformNo}}</td>
+
+        {% if train_data.isArrived == 0 or train_data.STAT == "O" %}
+        <td  style="color:green;">समय पर</td>
+        
+        {% else %}
+        {% if train_data.isArrived == 1 or train_data.STAT == "AG" or train_data.STAT == "AD" %}
+       
+        <td  style="color:orange;">खड़ी है</td>
+        
+        {% else %}
+        <td style="color:red;">देरी से</td>
+             
+        
+        {% endif %}
+        {% endif %}
   </tr>
     {% endfor %}
 </table>
