@@ -63,11 +63,11 @@
   
   <table >
     <tr >
-        <th >Train No</th>
+        <th >TrainNo</th>
         <th>Train Name</th>
-        <th>Expt.Time</th>
+        <th>Time</th>
         <!--<th>A/D</th>-->
-        <th>PFNo.</th>
+        <th>PFNo</th>
         <th>Status</th>
     </tr>
     {% for train_data in ntes_data%}
@@ -84,6 +84,7 @@
         {% endif %}
 
         <td>{{train_data.platformNo}}</td>
+
         {% if train_data.isArrived == 0 or train_data.STAT == "O" %}
         <td  style="color:green;">On Time</td>
         
